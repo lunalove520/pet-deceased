@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luna 離世寵物溝通｜事前說明書</title>
+    <!-- 載入 Tailwind CSS 與字體 -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- 載入 React 相關 -->
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <!-- 載入 Lucide 圖標 -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body { font-family: 'Noto Sans TC', sans-serif; scroll-behavior: smooth; }
+        .reveal { transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
+        .fade-in { opacity: 0; transform: translateY(20px); }
+        .visible { opacity: 1; transform: translateY(0); }
+    </style>
+</head>
+<body class="bg-[#FFF9FA]">
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
+
+        const App = () => {
+            const [copied, setCopied] = useState(false);
+            
+            // 捲動顯現效果
+            useEffect(() => {
+                const observerOptions = { threshold: 0.1 };
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                        }
+                    });
+                }, observerOptions);
+
+                document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+                return () => observer.disconnect();
+            }, []);
+
+            const copyToClipboard = () => {
+                const accountNumber = "111015404848";
+                const el = document.createElement('textarea');
+                el.value = accountNumber;
+                document.body.appendChild(el);
+                el.select();
+                document.execCommand('copy');
+                document.body.removeChild(el);
+                setCopied(true);
+                setTimeout(() => setCopied(false), 2000);
+            };
+
+            return (
+                <div className="min-h-screen text-[#5A4E4F] selection:bg-[#FFC1CC]/30">
+                    
+                    {/* 頂部寫實首屏 - Hero Section */}
+                    <section className="relative h-[80vh] flex items-center justify-center overflow-hidden">
+                        <div className="absolute inset-0 z-0">
+                            {/* 此處請確保照片名為 hero-cat.jpg 並放在同一個目錄 */}
+                            <img 
+                                src="./hero-cat.jpg" 
+                                alt="Hero Cat" 
+                                className="w-full h-full object-cover"
+                                onError={(e) => {
+                                    e.target.src = "https://images.unsplash.com/photo-1574158622672-b5981c146e6a?auto=format&fit=crop&q=80&w=2000";
+                                }}
+                            />
+                            {/* 粉嫩漸層濾鏡 */}
+                            <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-[#FFF9FA]" />
+                        </div>
+
+                        <div className="relative z-10 text-center px-6">
+                            <div className="reveal fade-in">
+                                <h1 className="text-white text-3xl md:text-5xl font-bold tracking-[0.25em] mb-6 drop-shadow-lg">
+                                    Luna 離世寵物溝通<br/><span className="text-2xl md:text-3xl font-light opacity-90">｜事前說明書｜</span>
+                                </h1>
+                                <div className="inline-block bg-[#FFB6C1]/80 backdrop-blur-sm border border-white/40 rounded-full px-8 py-3 text-white text-lg tracking-widest shadow-lg">
+                                    20分鐘｜NT$2,222
+                                </div>
+                                <p className="text-white/90 mt-6 text-sm tracking-[0.3em] font-light">可加購超度 NT$5,000</p>
+                            </div>
+                        </div>
+
+                        {/* 底部波浪裝飾 (粉調曲線) */}
+                        <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-[0] transform rotate-180">
+                            <svg viewBox="0 0 1200 120" preserveAspectRatio="none" className="relative block w-[calc(110%+1.3px)] h-[60px] fill-[#FFF9FA]">
+                                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V120c6.35-7,31.06-12.85,48.11-14.28,71.12-6,114.65,11.53,184.22,12.75C266.33,118.84,293.18,61.64,321.39,56.44Z"></path>
+                            </svg>
+                        </div>
+                    </section>
+
+                    {/* 主要內容區 */}
+                    <main className="max-w-xl mx-auto px-6 pb-32 -mt-10 relative z-20">
+                        
+                        <section className="reveal fade-in bg-white rounded-[3rem] p-8 md:p-10 shadow-sm border border-[#FFB6C1]/10 mb-12">
+                            <div className="flex items-center gap-3 mb-8 text-[#E98596]">
+                                <i data-lucide="sparkles"></i>
+                                <h2 className="text-xl font-bold tracking-widest">✦ 這個服務能做什麼</h2>
+                            </div>
+                            <p className="leading-relaxed mb-8 text-[1.05rem]">
+                                離世後的毛孩記憶會逐漸模糊，無法像在世溝通那樣被細節驗證——這是正常現象，不是異常。就算是人，離開一個空間久了，也未必記得裡面每一個細節。
+                            </p>
+                            <div className="space-y-6">
+                                <p className="font-medium text-[#8D7B7C] text-sm tracking-widest pl-2 border-l-2 border-[#FFB6C1]/50">在這個前提下，離世溝通能提供的是：</p>
+                                <ul className="space-y-4 list-none">
+                                    {[
+                                        "牠目前所在的環境與狀態，是否有問題需要協助",
+                                        "牠對前世主人的心意與想說的話（推薦主人可以在事前寫懺悔信）",
+                                        "下一世轉世方向的大致輪廓（人道／畜生道等劇本傾向）",
+                                        "如要確定轉世方案，最佳方案是在我們這邊進行超度程序"
+                                    ].map((item, idx) => (
+                                        <li key={idx} className="flex gap-4 bg-[#FFFDFE] p-5 rounded-[1.5rem] border border-[#FFE4E8] text-[0.95rem] leading-relaxed shadow-sm">
+                                            <div className="w-1.5 h-1.5 rounded-full bg-[#FFB6C1] mt-2.5 shrink-0" />
+                                            {item}
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                            <div className="mt-10 p-5 bg-[#FFF0F3] rounded-[2rem] border-l-4 border-[#FFB6C1]">
+                                <p className="text-sm leading-relaxed">
+                                    <span className="font-bold text-[#E98596]">關於轉世資訊：</span> 轉世方向與福報量的確切資訊，需在超度之後才能準確推算。溝通中若牠提及相關內容，可能帶有情感性語言成分，僅供參考，不作為確切依據。
+                                </p>
+                            </div>
+                        </section>
+
+                        <section className="reveal fade-in mb-12 px-2">
+                            <div className="flex items-center gap-3 mb-6 text-[#E98596]">
+                                <i data-lucide="clock"></i>
+                                <h2 className="text-xl font-bold tracking-widest">✦ 關於溝通時機</h2>
+                            </div>
+                            <div className="space-y-5 text-base leading-relaxed">
+                                <p>離世溝通是一個動態的過程，不同時間點能問到的事情不同。</p>
+                                <p>剛離世時可以溝通，能力上沒有時間限制。但如果你最想了解的是轉世相關的問題，建議在火化與法事完成之後再進行，資訊會更完整、更穩定。</p>
+                                <div className="p-6 rounded-[2.5rem] bg-white border border-[#FFE4E8] shadow-sm relative overflow-hidden group">
+                                    <div className="absolute top-0 right-0 w-20 h-20 bg-[#FFF0F3] rounded-full -mr-10 -mt-10 transition-transform group-hover:scale-110" />
+                                    <p className="relative z-10 text-[0.95rem] leading-relaxed">
+                                        若時間過久、牠已轉世，前世記憶會模糊，部分問題未必能問到——因為牠已經是新的生命體了。這不是失敗，這是正常的動態進程。
+                                    </p>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section className="reveal fade-in mb-16 px-2">
+                            <div className="flex items-center gap-3 mb-8 text-[#E98596]">
+                                <i data-lucide="info"></i>
+                                <h2 className="text-xl font-bold tracking-widest">✦ 幾件需要知道的事</h2>
+                            </div>
+                            
+                            <div className="space-y-6">
+                                <div className="p-7 rounded-[2.5rem] bg-white border border-[#FFE4E8] shadow-sm">
+                                    <h3 className="font-bold mb-4 text-[#E98596]">一、關於記憶核實</h3>
+                                    <p className="text-[0.9rem] leading-relaxed opacity-90">
+                                        不要反覆要求牠確認生前細節。離世後記憶本就模糊，一直追問既不客觀，對牠也不公平。<br /><br />
+                                        若需要驗證記憶的理由是確保溝通師是否有連上線，建議就是不進行溝通——相信的有緣者再預約就好了。
+                                    </p>
+                                </div>
+
+                                <div className="p-7 rounded-[2.5rem] bg-white border border-[#FFE4E8] shadow-sm">
+                                    <h3 className="font-bold mb-4 text-[#E98596]">二、關於轉世</h3>
+                                    <p className="text-[0.9rem] leading-relaxed opacity-90">
+                                        轉世後不會有前世記憶，這是規則。不要要求牠一定轉世到你身邊——這不是你能指定的事。<br /><br />
+                                        在未超度前，可以問牠的意願：「假設你能選擇，你願意再回到這個家庭嗎？願意或不願意的原因是什麼？」這是合理的問題，但答案不是絕對的，只是牠當下的心意。
+                                    </p>
+                                </div>
+
+                                <div className="p-8 rounded-[2.5rem] bg-[#6B5B5D] text-white shadow-xl relative overflow-hidden">
+                                    <h3 className="font-bold mb-4 text-[#FFB6C1] text-lg">三、關於執念</h3>
+                                    <p className="text-[0.95rem] leading-relaxed opacity-90 font-light">
+                                        這個服務不是讓你隨時找牠聊天的管道。你對牠念念不忘是你的事，但你的執念對牠來說是一種牽絆——真正愛牠，就讓牠走得乾淨。
+                                    </p>
+                                </div>
+
+                                <div className="p-7 rounded-[2.5rem] bg-white border border-[#FFE4E8] shadow-sm">
+                                    <h3 className="font-bold mb-4 text-[#E98596]">四、關於骨灰與紀念品</h3>
+                                    <p className="text-[0.9rem] leading-relaxed opacity-90">
+                                        專業建議：骨灰不適合放在家中，骨灰製成的紀念品同樣不建議。當然，這些都是你自己的決定。
+                                    </p>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section className="reveal fade-in bg-[#FFF0F3] rounded-[3rem] p-10 mb-12 text-center border border-[#FFB6C1]/10 shadow-inner">
+                            <h2 className="text-xl font-bold mb-5 tracking-widest text-[#E98596]">✦ 服務前建議</h2>
+                            <p className="text-[0.95rem] leading-loose text-[#6B5B5D]">
+                                在溝通之前，建議你先寫一封溝通之前的懺悔信給牠。不需要很長，把你想說的話、遺憾、愧疚，或者只是謝謝牠，都寫下來。這對溝通品質有幫助，對你自己也是一個梳理。
+                            </p>
+                        </section>
+
+                        <section className="reveal fade-in mb-12 grid grid-cols-2 gap-4 px-2">
+                            <div className="col-span-2 text-[#E98596] font-bold mb-4 flex items-center gap-3">
+                                <i data-lucide="sparkles"></i>
+                                <h2 className="text-xl tracking-widest">✦ 關於祭品</h2>
+                            </div>
+                            <div className="bg-white p-8 rounded-[2.5rem] border border-[#FFE4E8] shadow-sm text-center">
+                                <span className="block font-bold mb-3 text-[#E98596]">食物</span>
+                                <p className="text-xs text-[#8D7B7C] leading-relaxed">通常不必要<br />但若想燒也無妨</p>
+                            </div>
+                            <div className="bg-white p-8 rounded-[2.5rem] border border-[#FFE4E8] shadow-sm text-center">
+                                <span className="block font-bold mb-3 text-[#E98596]">蓮花/冥紙/元寶金磚</span>
+                                <p className="text-xs text-[#8D7B7C] leading-relaxed">比較容易被收到<br />有能力可多燒</p>
+                            </div>
+                        </section>
+
+                        <section className="reveal fade-in mb-12 px-4">
+                            <div className="flex items-center gap-3 mb-8 text-[#E98596]">
+                                <i data-lucide="heart"></i>
+                                <h2 className="text-xl font-bold tracking-widest">✦ 關於信仰與法事</h2>
+                            </div>
+                            <div className="space-y-8 text-[0.95rem] leading-loose text-[#6B5B5D]">
+                                <p>在溝通過程中，我有時會觀察到牠在某位神明面前修行的樣子——有時是女性形象，有時是男性形象。事後詢問主人，幾乎都能對應上他們曾在那個信仰體系下為牠做過的法事。這些都是我在不知情的狀況下觀察到的現象。</p>
+                                <div className="bg-white p-10 rounded-[3rem] italic text-center border-x-8 border-[#FFB6C1]/30 shadow-sm">
+                                    「有一個概念值得了解：在三維世界看似虛擬的事，在四維以上的世界反而越真實。」
+                                </div>
+                                <p>你為牠燒的紙錢、做的法事、在神明前許的願——這些在我們這裡看起來是儀式，但在牠所在的空間，是實實在在呈現在牠身上的執行結果。</p>
+                                <p className="font-bold text-center py-6 border-y border-[#FFE4E8] text-[#E98596]">所以如果你有這方面的信仰與意願，我鼓勵你去做。不強制，但確實有意義。</p>
+                            </div>
+                        </section>
+
+                        <section className="reveal fade-in bg-white rounded-[3rem] p-8 md:p-10 shadow-sm border border-[#FFE4E8] mb-12">
+                            <div className="flex items-center gap-3 mb-10 text-[#E98596]">
+                                <i data-lucide="alert-circle"></i>
+                                <h2 className="text-xl font-bold tracking-widest">✦ 關於超度與轉世確認</h2>
+                            </div>
+                            
+                            <div className="mb-10 pb-8 border-b border-[#FFE4E8]">
+                                <div className="flex justify-between items-center mb-4">
+                                    <span className="font-bold text-lg">超度</span>
+                                    <span className="text-[#E98596] font-bold text-xl tracking-tighter">NT$5,000</span>
+                                </div>
+                                <p className="text-[0.9rem] text-[#8D7B7C] leading-relaxed font-light">
+                                    超度不是強制選項，但如果你真的想確認牠的轉世去向，超度是必要的前置條件。我們這邊的超度包含超度後的轉世推算，讓你得到最準確的答案。
+                                </p>
+                            </div>
+
+                            <div className="space-y-6">
+                                <div className="flex justify-between items-center text-[1rem] font-bold">
+                                    <span>炁絡筆裁示／動物兵馬打聖杯確認轉世</span>
+                                    <span className="text-[#E98596]">NT$666</span>
+                                </div>
+                                <p className="text-[0.9rem] text-[#8D7B7C] leading-relaxed font-light">
+                                    如果你懷疑目前的寵物是否為前一隻的轉世，可透過以下方式確認，此服務不包含在離世溝通費用內，需另外付費：
+                                </p>
+                                <ul className="text-sm space-y-4 text-[#6B5B5D] pl-4">
+                                    <li className="flex gap-3 items-start"><span className="text-[#FFB6C1] mt-1">•</span> 神明用炁絡筆裁示｜NT$666</li>
+                                    <li className="flex gap-3 items-start"><span className="text-[#FFB6C1] mt-1">•</span> 動物兵馬打聖杯確認｜NT$666</li>
+                                </ul>
+                            </div>
+                        </section>
+
+                        <section className="reveal fade-in bg-[#6B5B5D] text-white rounded-[3.5rem] p-10 shadow-2xl relative overflow-hidden">
+                            <h2 className="text-xl font-bold mb-10 tracking-[0.2em] text-[#FFB6C1] text-center">✦ 預約資訊</h2>
+                            
+                            <div className="space-y-8 mb-12 text-[0.95rem]">
+                                {[
+                                    "✦ 寵物寶貝名稱：",
+                                    "✦ 服務類型：離世溝通 ／ 離世溝通＋超度（擇一）",
+                                    "✦ 離世時間：",
+                                    "✦ 預約時段："
+                                ].map((text, i) => (
+                                    <div key={i} className="border-b border-white/10 pb-4 font-light opacity-90">{text}</div>
+                                ))}
+                            </div>
+
+                            <div className="bg-white/5 rounded-[2.5rem] p-8 border border-white/10 backdrop-blur-sm">
+                                <p className="text-xs text-[#FFB6C1] mb-4 tracking-widest font-bold">匯款帳號</p>
+                                <div className="font-light text-xl mb-6 flex items-center justify-between">
+                                    <span>824 連線商業銀行<br /><span className="font-bold tracking-wider">111015404848</span></span>
+                                    <button 
+                                        onClick={copyToClipboard}
+                                        className={`p-4 rounded-full transition-all duration-500 shadow-lg ${copied ? 'bg-green-500' : 'bg-[#FFB6C1]'}`}
+                                    >
+                                        {copied ? "已複製" : "複製"}
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div className="mt-10 text-center">
+                                <p className="text-sm font-light opacity-60 leading-loose">請將匯款截圖傳給我以完成預約。<br />若不確定是否適合預約，歡迎先詢問。</p>
+                            </div>
+                        </section>
+
+                    </main>
+
+                    <footer className="relative h-40 flex items-center justify-center opacity-10">
+                         <div className="scale-150 transform">
+                           <i data-lucide="heart" size="60" className="text-[#E98596]"></i>
+                         </div>
+                    </footer>
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+
+        // 初始化圖標
+        setTimeout(() => lucide.createIcons(), 500);
+    </script>
+</body>
+</html>
