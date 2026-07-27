@@ -26,8 +26,60 @@
     <script type="text/babel">
         const { useState, useEffect, useRef } = React;
 
+        // 常見問題（2026-07-27 新增）。答案全部出自本頁既有內容與 Luna 本人口述，沒有新的說法。
+        const FAQ = [
+            { q: "牠離開很久了，還可以溝通嗎？",
+              a: "可以，能力上沒有時間限制。但如果你最想問的是轉世相關的問題，建議在火化與法事完成之後再進行，資訊會更完整、更穩定。" },
+            { q: "我可以請牠說一件只有我們知道的事，來確認你有沒有連上嗎？",
+              a: "不建議。離世後記憶本來就會逐漸模糊，一直追問既不客觀，對牠也不公平。如果你需要靠這個才能相信，我建議先不要預約——相信的有緣者，再預約就好。" },
+            { q: "你能保證什麼？",
+              a: "我保證我一定連得上，我的能力一直都是這樣。但我沒辦法保證每個個案的效果都一樣：離開的時間不同、狀況不同，能問到的東西就不同，有些時候不會像在世溝通那種感覺。" },
+            { q: "為什麼牠的個性跟我印象中不太一樣？",
+              a: "離世之後的靈魂，性格不一定跟牠還在的時候一樣。這是正常的，不是連錯了。" },
+            { q: "可以問牠什麼時候回來、會不會回到我身邊嗎？",
+              a: "轉世後不會有前世記憶，這是規則；也不能指定牠轉世到你身邊。在未超度前，可以問牠的意願：「假設你能選擇，你願意再回到這個家庭嗎？願意或不願意的原因是什麼？」" },
+            { q: "一定要超度嗎？",
+              a: "不是強制選項。但如果你真的想確認牠的轉世去向，超度是必要的前置條件（NT$5,000，含超度後的轉世推算）。" },
+            { q: "溝通之前我需要準備什麼？",
+              a: "建議先寫一封懺悔信給牠。不需要很長，把你想說的話、遺憾、愧疚，或者只是謝謝牠，都寫下來。這對溝通品質有幫助，對你自己也是一個梳理。" },
+            { q: "可以留下影片紀錄嗎？",
+              a: "可以，改在騰訊會議進行就能錄下來。" },
+            { q: "我可以常常找牠聊天嗎？",
+              a: "這個服務不是讓你隨時找牠聊天的管道。你對牠念念不忘是你的事，但你的執念對牠來說是一種牽絆——真正愛牠，就讓牠走得乾淨。" },
+            { q: "可以供牛肉、或燒有牛肉的零食給牠嗎？",
+              a: "不行。就算是牠自己要求，或是你平常給牠吃的零食裡本來就有牛肉，在我們的專業來看都不建議。" },
+            { q: "骨灰可以放在家裡嗎？",
+              a: "專業建議是不適合，骨灰製成的紀念品同樣不建議。當然，這些都是你自己的決定。" },
+        ];
+
+        const Faq = () => {
+            const [open, setOpen] = useState(-1);
+            return (
+                <section className="reveal fade-in bg-white rounded-[3rem] p-8 md:p-10 shadow-sm border border-[#FFB6C1]/10 mb-12">
+                    <div className="flex items-center gap-3 mb-8 text-[#E98596]">
+                        <i data-lucide="message-circle-question"></i>
+                        <h2 className="text-xl font-bold tracking-widest">✦ 常見問題</h2>
+                    </div>
+                    <div className="space-y-3">
+                        {FAQ.map((item, i) => (
+                            <div key={i} className="border border-[#FFE4E8] rounded-[1.5rem] overflow-hidden bg-[#FFFDFE]">
+                                <button
+                                    onClick={() => setOpen(open === i ? -1 : i)}
+                                    className="w-full text-left px-5 py-4 flex items-start gap-3 text-[0.95rem] font-medium text-[#5A4E4F]">
+                                    <span className="text-[#FFB6C1] mt-0.5 shrink-0">{open === i ? "－" : "＋"}</span>
+                                    <span>{item.q}</span>
+                                </button>
+                                {open === i && (
+                                    <p className="px-5 pb-5 pl-12 text-[0.92rem] leading-relaxed text-[#6B5B5D] font-light">{item.a}</p>
+                                )}
+                            </div>
+                        ))}
+                    </div>
+                </section>
+            );
+        };
+
         const App = () => {
-            const [copied, setCopied] = useState(false);
             
             // 捲動顯現效果
             useEffect(() => {
@@ -43,18 +95,6 @@
                 document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
                 return () => observer.disconnect();
             }, []);
-
-            const copyToClipboard = () => {
-                const accountNumber = "215540046500";
-                const el = document.createElement('textarea');
-                el.value = accountNumber;
-                document.body.appendChild(el);
-                el.select();
-                document.execCommand('copy');
-                document.body.removeChild(el);
-                setCopied(true);
-                setTimeout(() => setCopied(false), 2000);
-            };
 
             return (
                 <div className="min-h-screen text-[#5A4E4F] selection:bg-[#FFC1CC]/30">
@@ -97,7 +137,16 @@
 
                     {/* 主要內容區 */}
                     <main className="max-w-xl mx-auto px-6 pb-32 -mt-10 relative z-20">
-                        
+
+                        {/* 先講清楚（2026-07-27 Luna 口述）：連線保證、效果不保證、要驗證就先別約 */}
+                        <section className="reveal fade-in bg-[#FFF0F3] rounded-[3rem] p-8 md:p-10 shadow-sm mb-12">
+                            <h2 className="text-xl font-bold tracking-widest text-[#E98596] mb-6">✦ 先講清楚</h2>
+                            <p className="leading-relaxed text-[1.05rem] mb-4">我保證我一定連得上，我的能力一直都是這樣。</p>
+                            <p className="leading-relaxed text-[1.05rem] mb-4">但我沒辦法保證每個個案的效果都一樣。離開的時間不同、狀況不同，能問到的東西就不同——有些時候，它不會像在世溝通那種感覺。離世之後的靈魂，性格也不一定跟牠還在的時候一樣。</p>
+                            <p className="leading-relaxed text-[1.05rem] font-medium">如果你堅持要用前世記憶來驗證我有沒有連上，我建議你先不要預約。相信的有緣者，再預約就好。</p>
+                        </section>
+
+
                         <section className="reveal fade-in bg-white rounded-[3rem] p-8 md:p-10 shadow-sm border border-[#FFB6C1]/10 mb-12">
                             <div className="flex items-center gap-3 mb-8 text-[#E98596]">
                                 <i data-lucide="sparkles"></i>
@@ -205,6 +254,11 @@
                                 <span className="block font-bold mb-3 text-[#E98596]">蓮花/冥紙/元寶金磚</span>
                                 <p className="text-xs text-[#8D7B7C] leading-relaxed">比較容易被收到<br />有能力可多燒</p>
                             </div>
+                            {/* 2026-07-27 Luna 補：牛肉一律不建議 */}
+                            <div className="bg-white p-8 rounded-[2.5rem] border border-[#FFE4E8] shadow-sm text-center">
+                                <span className="block font-bold mb-3 text-[#E98596]">牛肉</span>
+                                <p className="text-xs text-[#8D7B7C] leading-relaxed">不建議<br />就算牠自己要求，或牠生前的零食含牛肉，都不建議</p>
+                            </div>
                         </section>
 
                         <section className="reveal fade-in mb-12 px-4">
@@ -253,6 +307,8 @@
                             </div>
                         </section>
 
+                        <Faq />
+
                         <section className="reveal fade-in bg-[#6B5B5D] text-white rounded-[3.5rem] p-10 shadow-2xl relative overflow-hidden">
                             <h2 className="text-xl font-bold mb-10 tracking-[0.2em] text-[#FFB6C1] text-center">✦ 預約資訊</h2>
                             
@@ -267,21 +323,17 @@
                                 ))}
                             </div>
 
+                            {/* 2026-07-27 拿掉匯款帳號區塊：改成「先在 LINE 選好時間，才談匯款」 */}
                             <div className="bg-white/5 rounded-[2.5rem] p-8 border border-white/10 backdrop-blur-sm">
-                                <p className="text-xs text-[#FFB6C1] mb-4 tracking-widest font-bold">匯款帳號</p>
-                                <div className="font-light text-xl mb-6 flex items-center justify-between">
-                                    <span>822 中國信託<br /><span className="font-bold tracking-wider">215540046500</span></span>
-                                    <button 
-                                        onClick={copyToClipboard}
-                                        className={`p-4 rounded-full transition-all duration-500 shadow-lg ${copied ? 'bg-green-500' : 'bg-[#FFB6C1]'}`}
-                                    >
-                                        {copied ? "已複製" : "複製"}
-                                    </button>
-                                </div>
+                                <p className="text-sm font-light leading-loose opacity-90">
+                                    看完之後，回到 LINE 跟我說一聲。<br />
+                                    我會把最近還剩下的時間給你挑，<br />
+                                    時間確定了，再談匯款。
+                                </p>
                             </div>
 
                             <div className="mt-10 text-center">
-                                <p className="text-sm font-light opacity-60 leading-loose">請將匯款截圖傳給我以完成預約。<br />若不確定是否適合預約，歡迎先詢問。</p>
+                                <p className="text-sm font-light opacity-60 leading-loose">若不確定是否適合預約，歡迎先詢問。</p>
                             </div>
                         </section>
 
